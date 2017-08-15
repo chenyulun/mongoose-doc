@@ -26,10 +26,14 @@ db.once('open', function () {
 	console.log(silence.name);// 'Silence'
 
 	let fluffy = new Kitten({ name: 'fluffy' });
-	// let fluffySave = fluffy.save();
-	// fluffySave.then(fluffy => {
-	// 	fluffy.speak();
-	// },console.error);
+	/**
+	 * 第二次启动请注释掉该段代码，不然会重复存储
+	 * @type {Promise|*}
+	 */
+	let fluffySave = fluffy.save();
+	fluffySave.then(fluffy => {
+		fluffy.speak();
+	},console.error);
 
 	let KittenFind = Kitten.find({ name: /^Fluff/ });
 	KittenFind.then(kittens => {
