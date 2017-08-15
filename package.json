@@ -1,0 +1,27 @@
+{
+  "name": "mongoose-doc",
+  "version": "1.0.0",
+  "description": "mongoose Chinese document",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chenyulun/mongoose-doc.git"
+  },
+  "keywords": [
+    "mongoose",
+    "mongodb",
+    "node"
+  ],
+  "author": "chenyulun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chenyulun/mongoose-doc/issues"
+  },
+  "homepage": "https://github.com/chenyulun/mongoose-doc#readme",
+  "dependencies": {
+    "mongoose": "^4.11.7"
+  }
+}
