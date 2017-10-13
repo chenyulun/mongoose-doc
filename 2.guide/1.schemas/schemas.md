@@ -259,7 +259,7 @@ Clock.ensureIndexes(callback);
 const schema = new Schema({}, { bufferCommands: false });
 ```
 ##### 参数：capped:Boolean
-在mongoose支持mongoDB里面设置集合最大值，该参数用于设置集合的最大值上限(单位为bytes):
+在mongoose支持mongoDB里面设置一次性修改集合大小最大值，该属性能限制一次操作的量(单位为bytes):
 ```javascript
 new Schema({}, { capped: 1024 });
 ```
@@ -345,20 +345,24 @@ new Schema({}, { read: 'secondaryPreferred' }); // aliased as 'sp'
 new Schema({}, { read: 'nearest' });            // aliased as 'n'
 ```
 ##### 参数：safe:Boolean
-这个选项传递给MongoDB和所有操作指定如果错误应该回到我们的回调或者钩子函数的行为：
+这个配置会在MongoDB所有的操作中起作用。如果设置成true就是在操作的时候要等待返回的MongoDB返回的结果，比如update，要返回影响的条数，才往后执行，如果safe：false，则表示不用等到结果就向后执行了。
+默认设置为true能保证所有的错误能通过我们写的回调函数。我们也能设置其它的安全等级如：
 ```javascript
 var safe = true;
 new Schema({}, { safe: safe });
 var safe = { w: "majority", wtimeout: 10000 };
 new Schema({}, { safe: safe });
+var safe = { w: "1",j: ture, wtimeout: 10000 };
+new Schema({}, { safe: safe });
 ```
+相关文章[mongodb的write concern](http://kyfxbl.iteye.com/blog/1952941)
 ##### 参数：shardKey:Object
 shardKey选项时使用我们有一个分片MongoDB架构。每个分片收集碎片键必须出现在所有的插入/更新操作。我们只需要设置该模式选择相同的分片键),我们将所有的设置：
 ```javascript
 new Schema({}, { shardKey: { tag: 1, name: 1 }})
 ```
-##### 参数：strict:Boolean
-设置是否严格按照模式模板设置数据，默认true,如下：
+##### 参数：strict:Boolean|String
+设置是否严格按照模式模板设置数据，默认true,strict也可以设置为throw，表示出现问题将会抛出错误而不是抛弃不合适的数据。如下：
 ```javascript
 //schemas_5.js
 	const thingSchema = new Schema({
@@ -401,7 +405,7 @@ var thing = new Thing;
 thing.set('iAmNotInTheSchema', true);
 thing.save(); // iAmNotInTheSchema is not saved to the db
 ```
-实例化的时候可以传入参数来控制是否启用这个严格模式：
+该选项也可以在Model级别使用,传入参数来控制是否启用这个严格模式：
 ```javascript
 var Thing = mongoose.model('Thing');
 var thing = new Thing(doc, true);  // enables strict mode

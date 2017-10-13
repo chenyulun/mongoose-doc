@@ -1,21 +1,16 @@
-## SchemaTypes 数据类型
-数据类型用于定义默认路径， 验证方式， 获取/设置方法，用于数据库查询的默认字段，以及其他针对字符串与数字的特性。关于详细信息请查阅相关API文档。  
-
-> 译注：默认路径即某个域相对于文档而言的路径，如{a: 1}这个文档中，若指定路径为’a’，即可访问到1这个数据。  
-
-接下来是Mongoose中所有可用的数据类型。
-
-*   String(字符串)
-*   Number(数字)
-*   Date(日期)
-*   Buffer(缓存区)
-*   Boolean(布尔值)
-*   Mixed(混合)
-*   ObjectId(对象ID)
-*   Array  (数组)  
-
-举个例子：
-```javascript
+/**
+ * Created by EX_WLJR_CHENYULUN on 2017/10/13.
+ */
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/test',{
+    useMongoClient: true
+});
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+    const Schema = mongoose.Schema;
+// ready to go!
     var schema = new Schema({
         name:    String,
         binary:  Buffer,
@@ -45,7 +40,7 @@
 
     var m = new Thing;
     m.name = 'Statue of Liberty';
-    m.age = 125;
+    m.age = 25;
     m.updated = new Date;
     m.binary = new Buffer(0);
     m.living = false;
@@ -64,8 +59,5 @@
     thingPromise.then(thing => {
         console.log('save succeed');
     },console.error);
-```
-上面的例子会报错：
-> Thing validation failed: age: Path `age` (125) is more than maximum allowed value (65).  
+});
 
-把age修改到18到65就可以保存成功；
