@@ -1,0 +1,1 @@
+### [官方创建自定义数据类型](http://mongoosejs.com/docs/customschematypes.html)

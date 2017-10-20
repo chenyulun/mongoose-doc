@@ -304,7 +304,7 @@ const p = new Page({ name: 'mongodb.org' });
 console.log(p.id); // undefined
 ```
 ##### 参数：_id:Boolean
-同上
+同上(schemas_8.js)
 
 ##### 参数：minimize:Boolean
 默认为true,默认情况下，创建模型时，如果定义的对象为空，着会过滤掉该属性或者对象：
